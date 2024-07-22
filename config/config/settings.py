@@ -27,7 +27,9 @@ CSRF_TRUSTED_ORIGINS = []
 CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", default=False, cast=bool)
 
 # If CORS_ALLOW_ALL_ORIGINS is set to False, only requests from origins in this list will be permitted.
-CORS_ALLOWED_ORIGINS = []
+CORS_ALLOW_ALL_ORIGINS: False
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=lambda v: [
+                              s.strip() for s in v.split(',')])
 
 CORS_ALLOW_METHODS = (*default_methods,)
 
@@ -36,7 +38,7 @@ CORS_ALLOW_HEADERS = (*default_headers,)
 # Application definition
 INSTALLED_APPS = [
     "corsheaders",
-    "django.contrib.admin",
+    # "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
