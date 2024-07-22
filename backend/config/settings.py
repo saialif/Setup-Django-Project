@@ -26,7 +26,8 @@ ALLOWED_HOSTS = []
 CSRF_TRUSTED_ORIGINS = []
 
 # Allow request from any origin/hosts if set to True
-CORS_ALLOW_ALL_ORIGINS = config("CORS_ALLOW_ALL_ORIGINS", default=False, cast=bool)
+CORS_ALLOW_ALL_ORIGINS = config(
+    "CORS_ALLOW_ALL_ORIGINS", default=False, cast=bool)
 
 # If CORS_ALLOW_ALL_ORIGINS is set to False, only requests from origins in this list will be permitted.
 CORS_ALLOW_ALL_ORIGINS: False
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -55,12 +58,16 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    # "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'helpers.pagination.Paginator'
+}
 
 TEMPLATES = [
     {
