@@ -10,6 +10,8 @@ This repository is dedicated to discovering best practices for setting up a basi
 - python-decouple
 - psycopg2
 - dj-database-url
+- colorlog
+- isort
 
 ## Getting Started
 

@@ -1,8 +1,10 @@
 from pathlib import Path
+
+from corsheaders.defaults import default_headers, default_methods
 from decouple import config
 from dj_database_url import parse as db_url
-from corsheaders.defaults import default_methods, default_headers
 
+from config.logging import LOGGING
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
