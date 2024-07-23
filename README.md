@@ -12,7 +12,7 @@ This repository is dedicated to discovering best practices for setting up a basi
 - dj-database-url
 - colorlog
 - isort
-- pyjwt
+- pyjwt[crypto]
 - python-dateutil
 
 ## Getting Started

@@ -41,7 +41,7 @@ class Login(APIView):
                     status_code=status.HTTP_400_BAD_REQUEST
                 )
 
-            username = serializer.validated_data.get('username')
+            username = serializer.validated_data.get('username_or_email')
             password = serializer.validated_data.get('password')
 
             user = authenticate(username=username, password=password)

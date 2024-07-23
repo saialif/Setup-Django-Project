@@ -20,7 +20,8 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 # SECURITY SETTINGS: CORS and HOST validation.
 # ALLOWED_HOSTS: List of valid hosts to validate incoming HTTP requests based on the Host header.
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [
+                       s.strip() for s in v.split(',')])
 
 # CSRF_TRUSTED_ORIGINS: List of trusted hosts for which CSRF protection is relaxed.
 CSRF_TRUSTED_ORIGINS = []
@@ -49,6 +50,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "rest_framework",
+    "models",
+    "helpers",
+
+    "authorization",
 ]
 
 MIDDLEWARE = [
@@ -127,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 PASSWORD_HASHERS = [
-    "backend.config.hashers.MyPBKDF2PasswordHasher",
+    "config.hashers.MyPBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
     "django.contrib.auth.hashers.Argon2PasswordHasher",
@@ -135,6 +140,12 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.ScryptPasswordHasher",
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'authorization.view.auth.EmailOrUsernameModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+AUTH_USER_MODEL = 'models.TUsers'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
