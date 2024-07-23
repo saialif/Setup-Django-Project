@@ -61,6 +61,7 @@ MIDDLEWARE = [
     # "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'authorization.view.decode.JWTMiddleware',
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -87,11 +88,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
+CACHES = {
+    "default": {
+        "BACKEND": config('CACHES_BACKEND'),
+        "LOCATION": config('CACHES_LOCATION'),
+        "KEY_PREFIX": config('KEY_PREFIX'),
+        # "KEY_FUNCTION": "helpers.types.make_key_prefix",
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 DATABASES = {
-    "default": config("DATABASE_URL", default=BASE_DIR / "db.sqlite3", cast=db_url)
+    "default": config(
+        "DATABASE_URL",
+        default=BASE_DIR / "db.sqlite3",
+        # default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
+        cast=db_url
+    )
 }
 
 
@@ -110,6 +124,15 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
+]
+
+PASSWORD_HASHERS = [
+    "backend.config.hashers.MyPBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+    "django.contrib.auth.hashers.ScryptPasswordHasher",
 ]
 
 

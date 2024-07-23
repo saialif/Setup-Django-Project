@@ -12,8 +12,24 @@ This repository is dedicated to discovering best practices for setting up a basi
 - dj-database-url
 - colorlog
 - isort
+- pyjwt
+- python-dateutil
 
 ## Getting Started
+
+### Setup Token Credential
+
+1. Generate a private key using the command:
+
+   ```sh
+   openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
+   ```
+
+2. Generate a public key using the command:
+
+   ```sh
+   openssl rsa -in private_key.pem -pubout -out public_key.pem
+   ```
 
 (Add instructions on how to set up and run the project)
 
