@@ -38,31 +38,38 @@ class TUsers(AbstractUser):
     objects = ActiveManager()
     all_objects = models.Manager()
 
-    users_id = models.BigAutoField(
-        db_column='USERS_ID', primary_key=True, editable=False)
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.BooleanField()
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    is_staff = models.BooleanField()
+    date_joined = models.DateTimeField()
+    users_id = models.BigAutoField(db_column='USERS_ID', primary_key=True)
     username = models.CharField(
-        db_column='USERNAME', max_length=150, unique=True)
-    email = models.EmailField(
-        db_column='EMAIL', unique=True)
-    is_active = models.BooleanField(
-        db_column='IS_ACTIVE', default=False)
-    created_at = models.DateTimeField(
-        db_column='CREATED_AT', auto_now_add=True)
+        db_column='USERNAME', unique=True, max_length=150)
+    email = models.CharField(db_column='EMAIL', unique=True, max_length=254)
+    is_active = models.BooleanField(db_column='IS_ACTIVE')
+    created_at = models.DateTimeField(db_column='CREATED_AT')
     created_by = models.CharField(
-        db_column='CREATED_BY', max_length=150, blank=True)
-    updated_at = models.DateTimeField(
-        db_column='UPDATED_AT', auto_now=True)
+        db_column='CREATED_BY', max_length=150, blank=True, null=True)
+    updated_at = models.DateTimeField(db_column='UPDATED_AT')
     updated_by = models.CharField(
-        db_column='UPDATED_BY', max_length=150, blank=True)
+        db_column='UPDATED_BY', max_length=150, blank=True, null=True)
     deleted_at = models.DateTimeField(
         db_column='DELETED_AT', blank=True, null=True)
     deleted_by = models.CharField(
-        db_column='DELETED_BY', max_length=150, blank=True)
-    x1 = models.CharField(db_column='X1', max_length=255, blank=True)
-    x2 = models.CharField(db_column='X2', max_length=255, blank=True)
-    x3 = models.CharField(db_column='X3', max_length=255, blank=True)
-    x4 = models.CharField(db_column='X4', max_length=255, blank=True)
-    x5 = models.CharField(db_column='X5', max_length=255, blank=True)
+        db_column='DELETED_BY', max_length=150, blank=True, null=True)
+    x1 = models.CharField(db_column='X1', max_length=255,
+                          blank=True, null=True)
+    x2 = models.CharField(db_column='X2', max_length=255,
+                          blank=True, null=True)
+    x3 = models.CharField(db_column='X3', max_length=255,
+                          blank=True, null=True)
+    x4 = models.CharField(db_column='X4', max_length=255,
+                          blank=True, null=True)
+    x5 = models.CharField(db_column='X5', max_length=255,
+                          blank=True, null=True)
 
     class Meta:
         managed = True

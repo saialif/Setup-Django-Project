@@ -53,6 +53,9 @@ class Login(APIView):
 
                 token = generate_token(user_data)
 
+                user.last_login = timezone.now()
+                user.save()
+
                 return get_response(
                     data={"token": token},
                     status_code=status.HTTP_200_OK
@@ -80,3 +83,59 @@ class Login(APIView):
                 errors={"errors": f"An unexpected error occurred: {str(e)}"},
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+    """ def post(self, request):
+        start_time = timezone.now()
+        try:
+            serializer_start_time = timezone.now()
+            serializer = ValidateLoginSerializer(data=request.data)
+            serializer_end_time = timezone.now()
+            logger.debug(f"Serializer time: {serializer_end_time - serializer_start_time}")
+
+            if not serializer.is_valid():
+                validation_end_time = timezone.now()
+                logger.debug(f"Validation failed time: {validation_end_time - serializer_end_time}")
+                return get_response(
+                    errors=serializer.errors,
+                    status_code=status.HTTP_400_BAD_REQUEST
+                )
+
+            username = serializer.validated_data.get('username_or_email')
+            password = serializer.validated_data.get('password')
+
+            auth_start_time = timezone.now()
+            user = authenticate(username=username, password=password)
+            auth_end_time = timezone.now()
+            logger.debug(f"Authentication time: {auth_end_time - auth_start_time}")
+
+            if user is not None:
+                user_data = {
+                    "employee_name": user.username,
+                    "email": user.email,
+                }
+
+                token_gen_start_time = timezone.now()
+                token = generate_token(user_data)
+                token_gen_end_time = timezone.now()
+                logger.debug(f"Token generation time: {token_gen_end_time - token_gen_start_time}")
+
+                user.last_login = timezone.now()
+                user.save()
+                save_end_time = timezone.now()
+                logger.debug(f"User save time: {save_end_time - token_gen_end_time}")
+
+                response_end_time = timezone.now()
+                logger.debug(f"Total process time: {response_end_time - start_time}")
+
+                return get_response(
+                    data={"token": token},
+                    status_code=status.HTTP_200_OK
+                )
+
+            invalid_login_time = timezone.now()
+            logger.debug(f"Invalid login time: {invalid_login_time - auth_end_time}")
+
+            return get_response(
+                errors={"errors": "Invalid username or password"},
+                status_code=status.HTTP_400_BAD_REQUEST
+            ) """
