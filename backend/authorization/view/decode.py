@@ -2,6 +2,7 @@ from functools import lru_cache
 
 import jwt
 from decouple import config
+from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.urls import reverse
 
@@ -53,6 +54,15 @@ class JWTMiddleware:
 
             if decoded_payload.get("app_id") not in self.app_id:
                 return JsonResponse({'error': 'Invalid app_id'}, status=401)
+
+            user_email = decoded_payload.get('email')
+
+            default_user_model = get_user_model()
+            try:
+                user = default_user_model.objects.get(email=user_email)
+                request.user = user
+            except default_user_model.DoesNotExist:
+                return JsonResponse({'error': 'User not found'}, status=401)
 
             request.token = decoded_payload
         except PermissionError as e:

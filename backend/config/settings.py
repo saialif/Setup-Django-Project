@@ -113,6 +113,8 @@ DATABASES = {
     )
 }
 
+# ATOMIC_REQUESTS = True
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -158,6 +160,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+DATE_FORMAT = 'd-m-Y'
+DATETIME_FORMAT = 'd-m-Y H:i:s'
+
+REST_FRAMEWORK = {
+    'DATE_FORMAT': '%d-%m-%Y',
+    'DATETIME_FORMAT': '%d-%m-%Y %H:%M:%S',
+    'DATE_INPUT_FORMATS': ['%d-%m-%Y', '%Y-%m-%d'],
+    'DATETIME_INPUT_FORMATS': ['%d-%m-%Y %H:%M:%S', '%Y-%m-%d %H:%M:%S'],
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
